@@ -590,5 +590,5 @@ SET ROW FILTER user_partition_column = current_user()
 ---
 
 **Last Updated**: February 2026
-**Spark Version**: 3.5.1
-**Delta Lake Version**: 2.4.0
+**Spark Version**: 3.5.8
+**Delta Lake Version**: 3.1.0
