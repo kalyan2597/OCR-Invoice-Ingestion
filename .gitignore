@@ -1,2 +1,3 @@
 config/*.json
 kaggle.json
+kaggle_login.json
