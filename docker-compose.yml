@@ -1,0 +1,24 @@
+services:
+  spark:
+    image: apache/spark:3.5.1
+    container_name: spark-delta
+    user: root
+    volumes:
+      - ./notebooks:/opt/spark/notebooks
+      - ./data:/opt/spark/data
+      # Mount kaggle_login.json into container
+      - ./kaggle_login.json:/root/.config/kaggle/kaggle_login.json:ro  # <-- mount kaggle.json
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_OPTS=--packages io.delta:delta-core_2.12:2.4.0
+    ports:
+      - "8888:8888"
+      - "8080:8080"
+    command: >
+      bash -c "mkdir -p /opt/spark/notebooks && \
+      pip install --no-cache-dir delta-spark==3.1.0 kaggle notebook jupyterlab ipywidgets nbclassic && \
+      jupyter notebook --notebook-dir=/opt/spark/notebooks --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''"
